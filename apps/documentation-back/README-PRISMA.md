@@ -22,7 +22,7 @@ npx prisma init --datasource-provider sqlite
 
 Le fichier `.env` contient :
 
-```
+```.env
 DATABASE_URL="file:./dev.db"
 ```
 
