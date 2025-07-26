@@ -15,7 +15,7 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Get()
-  async findAll(): Promise<Article[]> {
+  async findAll(): Promise<Partial<Article>[]> {
     return this.articlesService.findAll();
   }
 

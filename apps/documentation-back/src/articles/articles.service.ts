@@ -6,8 +6,16 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ArticlesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<Article[]> {
-    return this.prisma.article.findMany();
+  async findAll(): Promise<Partial<Article>[]> {
+    return this.prisma.article.findMany().then((articles) =>
+      articles.map((article) => ({
+        userId: article.userId,
+        title: article.title,
+        id: article.id,
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt,
+      })),
+    );
   }
 
   async findOne(id: string): Promise<Article | null> {
