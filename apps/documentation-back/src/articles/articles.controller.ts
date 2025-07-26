@@ -26,7 +26,7 @@ export class ArticlesController {
 
   @Post()
   async create(
-    @Body() data: { title: string; content: string; userId: number },
+    @Body() data: { title: string; content: string; userId: string },
   ): Promise<Article> {
     return this.articlesService.create(data);
   }

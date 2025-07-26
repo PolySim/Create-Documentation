@@ -17,7 +17,7 @@ export class ArticlesService {
   async create(data: {
     title: string;
     content: string;
-    userId: number;
+    userId: string;
   }): Promise<Article> {
     return this.prisma.article.create({ data });
   }
