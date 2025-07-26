@@ -13,6 +13,16 @@ export const getArticles = async () => {
   }
 };
 
+export const getArticle = async (id: string) => {
+  try {
+    const res = await fetch(`${config.apiUrl}/articles/${id}`);
+    return res.json() as Promise<Article>;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const createArticle = async (
   article: Omit<Article, "id" | "createdAt" | "updatedAt">
 ) => {

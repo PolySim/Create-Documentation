@@ -22,6 +22,7 @@ import {
   Search,
   Trash2,
 } from "lucide-react";
+import Link from "next/link";
 
 interface ArticlesListProps {
   articles: Article[];
@@ -116,9 +117,16 @@ export function ArticlesList({ articles }: ArticlesListProps) {
                   {article.content}
                 </p>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <Edit className="h-4 w-4 mr-1" />
-                    Modifier
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    asChild
+                  >
+                    <Link href={`/${article.id}/editor`}>
+                      <Edit className="h-4 w-4 mr-1" />
+                      Modifier
+                    </Link>
                   </Button>
                   <Button variant="outline" size="sm">
                     <Download className="h-4 w-4" />
@@ -141,7 +149,7 @@ export function ArticlesList({ articles }: ArticlesListProps) {
       <Dialog>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>Modifier l'article</DialogTitle>
+            <DialogTitle>Modifier l&apos;article</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
