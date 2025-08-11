@@ -7,11 +7,11 @@ import { SettingsDialog } from "@/components/editor/settings-dialog";
 import { Editor, EditorContainer } from "@/components/ui/editor";
 import SaveChange from "./saveChange";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PlateEditor({
   value,
   articleId,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
   articleId: string;
 }) {

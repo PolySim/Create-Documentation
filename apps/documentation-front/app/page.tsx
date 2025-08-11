@@ -5,9 +5,10 @@ import { useArticles } from "@/queries/article.queries";
 import { Loader } from "lucide-react";
 
 export default function Home() {
-  const { data: articles = [], isLoading } = useArticles();
+  const { data: articles = [], isPending } = useArticles();
+  console.log(articles);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-lg">
