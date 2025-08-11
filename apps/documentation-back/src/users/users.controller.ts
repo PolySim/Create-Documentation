@@ -25,7 +25,7 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() data: { email: string; name?: string }): Promise<User> {
+  async create(@Body() data: { email: string; sub_id: string }): Promise<User> {
     return this.usersService.create(data);
   }
 

@@ -18,8 +18,11 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
-  async create(data: { email: string; name?: string }): Promise<User> {
-    const user = this.usersRepository.create(data);
+  async create(data: { email: string; sub_id: string }): Promise<User> {
+    const user = this.usersRepository.create({
+      email: data.email,
+      sub_id: data.sub_id,
+    });
     return this.usersRepository.save(user);
   }
 

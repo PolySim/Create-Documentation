@@ -25,6 +25,9 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @Column()
+  sub_id: string;
+
   @OneToMany(() => Article, (article) => article.user)
   articles: Article[];
 }
