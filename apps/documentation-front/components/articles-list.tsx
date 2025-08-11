@@ -1,5 +1,6 @@
 "use client";
 
+import CreateArticle from "@/app/createArticle";
 import { DeleteConfirmationDialog } from "@/components/delete-confirmation-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +19,6 @@ import {
   Download,
   Edit,
   FileText,
-  Plus,
   Search,
   Trash2,
 } from "lucide-react";
@@ -72,10 +72,7 @@ export function ArticlesList({ articles }: ArticlesListProps) {
 
           {/* Create Button */}
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 font-medium">
-              <Plus className="w-5 h-5" />
-              Nouvel Article
-            </button>
+            <CreateArticle />
           </div>
         </div>
       </div>

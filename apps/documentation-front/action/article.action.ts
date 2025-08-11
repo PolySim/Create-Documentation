@@ -3,6 +3,7 @@
 import { config } from "@/config/config";
 import { auth } from "@clerk/nextjs/server";
 import { Article } from "@repo/ui/models/article.models";
+import { revalidateTag } from "next/cache";
 
 export const getArticles = async () => {
   try {
@@ -16,6 +17,10 @@ export const getArticles = async () => {
     const res = await fetch(`${config.API_URL}/articles`, {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      cache: "force-cache",
+      next: {
+        tags: ["articles"],
       },
     });
     return res.json() as Promise<Article[]>;
@@ -38,6 +43,10 @@ export const getArticle = async (id: string) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      cache: "force-cache",
+      next: {
+        tags: [`article-${id}`],
+      },
     });
     return res.json() as Promise<Article>;
   } catch (error) {
@@ -46,15 +55,13 @@ export const getArticle = async (id: string) => {
   }
 };
 
-export const createArticle = async (
-  article: Omit<Article, "id" | "createdAt" | "updatedAt">
-) => {
+export const createArticle = async (article: { title: string }) => {
   try {
     const { getToken } = await auth();
     const token = await getToken();
     if (!token) {
       console.error("Unauthorized");
-      return [];
+      return { success: false, data: {} as Article };
     }
 
     const res = await fetch(`${config.API_URL}/articles`, {
@@ -65,10 +72,12 @@ export const createArticle = async (
       },
       body: JSON.stringify(article),
     });
-    return res.json() as Promise<Article>;
+    const data = (await res.json()) as Article;
+    revalidateTag("articles");
+    return { success: true, data };
   } catch (error) {
     console.error(error);
-    throw error;
+    return { success: false, data: {} as Article };
   }
 };
 
@@ -92,6 +101,7 @@ export const updateArticle = async (
       },
       body: JSON.stringify(article),
     });
+    revalidateTag(`article-${id}`);
     return res.json() as Promise<Article>;
   } catch (error) {
     console.error(error);
@@ -114,6 +124,7 @@ export const deleteArticle = async (id: string) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    revalidateTag("articles");
     return res.ok;
   } catch (error) {
     console.error(error);

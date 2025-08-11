@@ -1,9 +1,12 @@
 import {
+  createArticle,
   getArticle,
   getArticles,
   updateArticle,
 } from "@/action/article.action";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const useArticles = () =>
   useQuery({
@@ -28,6 +31,31 @@ export const useUpdateArticle = (id: string) => {
       const previousArticle = queryClient.getQueryData(["article", id]);
       queryClient.setQueryData(["article", id], data);
       return { previousArticle };
+    },
+  });
+};
+
+export const useCreateArticle = () => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: (data: { title: string }) => createArticle(data),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["articles"] });
+    },
+    onSuccess: (data) => {
+      if (!data.success) {
+        toast.error("Failed to create article");
+        return;
+      }
+      router.push(`/${data.data.id}/editor`);
+    },
+    onError: () => {
+      toast.error("Failed to create article");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["articles"] });
     },
   });
 };

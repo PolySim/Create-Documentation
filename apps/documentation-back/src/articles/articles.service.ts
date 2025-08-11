@@ -70,6 +70,7 @@ export class ArticlesService {
     const article = this.articlesRepository.create({
       title,
       userId: user.id,
+      content: '[]',
     });
     return this.articlesRepository.save(article);
   }
