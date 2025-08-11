@@ -1,5 +1,9 @@
 import ConnectionForm from "./connexionForm";
 
+export const metadata = {
+  title: "Connexion",
+};
+
 export default async function Home() {
   return (
     <>

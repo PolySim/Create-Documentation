@@ -1,5 +1,9 @@
 import SignUpForm from "./signUpForm";
 
+export const metadata = {
+  title: "Inscription",
+};
+
 export default async function Home() {
   return (
     <>

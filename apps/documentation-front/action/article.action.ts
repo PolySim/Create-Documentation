@@ -36,7 +36,7 @@ export const getArticle = async (id: string) => {
     const token = await getToken();
     if (!token) {
       console.error("Unauthorized");
-      return [];
+      return {} as Article;
     }
 
     const res = await fetch(`${config.API_URL}/articles/${id}`, {
@@ -51,7 +51,7 @@ export const getArticle = async (id: string) => {
     return res.json() as Promise<Article>;
   } catch (error) {
     console.error(error);
-    return null;
+    return {} as Article;
   }
 };
 

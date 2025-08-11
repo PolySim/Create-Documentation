@@ -1,10 +1,12 @@
 "use client";
 
 import { PlateEditor } from "@/components/editor/plate-editor";
+import { useAppParams } from "@/hook/useAppParams";
 import { useArticle } from "@/queries/article.queries";
 import { Loader } from "lucide-react";
 
-const EditorContainer = ({ articleId }: { articleId: string }) => {
+const EditorContainer = () => {
+  const { articleId } = useAppParams();
   const { data: article, isPending } = useArticle(articleId);
 
   if (isPending) {

@@ -53,7 +53,7 @@ const ConnectionForm = () => {
 
         if (result.status === "complete" && setActive) {
           await setActive({ session: result.createdSessionId! });
-          router.push("/admin");
+          router.push("/");
         }
       } catch (err) {
         signInError(err as string);
