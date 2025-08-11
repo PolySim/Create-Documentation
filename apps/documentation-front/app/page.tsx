@@ -5,8 +5,7 @@ import { useArticles } from "@/queries/article.queries";
 import { Loader2 } from "lucide-react";
 
 export default function Home() {
-  const { data: articles = [], isPending } = useArticles();
-  console.log(articles);
+  const { data: articles, isPending } = useArticles();
 
   if (isPending) {
     return (
@@ -18,5 +17,5 @@ export default function Home() {
     );
   }
 
-  return <ArticlesList articles={articles} />;
+  return <ArticlesList articles={articles || []} />;
 }

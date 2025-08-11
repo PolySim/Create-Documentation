@@ -5,4 +5,5 @@ require('dotenv').config();
 
 export const config = {
   DATABASE_URL: process.env.DATABASE_URL,
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY as string,
 } as const;
