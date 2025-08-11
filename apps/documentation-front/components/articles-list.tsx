@@ -1,17 +1,9 @@
 "use client";
 
 import CreateArticle from "@/app/createArticle";
-import { DeleteConfirmationDialog } from "@/components/delete-confirmation-dialog";
+import DeleteArticle from "@/app/deleteArticle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Article } from "@repo/ui/models/article.models";
 import {
   Calendar,
@@ -20,7 +12,6 @@ import {
   Edit,
   FileText,
   Search,
-  Trash2,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -128,65 +119,13 @@ export function ArticlesList({ articles }: ArticlesListProps) {
                   <Button variant="outline" size="sm">
                     <Download className="h-4 w-4" />
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-destructive hover:text-destructive"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <DeleteArticle id={article.id} />
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
       )}
-
-      {/* Dialog de modification */}
-      <Dialog>
-        <DialogContent className="sm:max-w-[600px]">
-          <DialogHeader>
-            <DialogTitle>Modifier l&apos;article</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="edit-title"
-                className="text-sm font-medium leading-none"
-              >
-                Titre
-              </label>
-              <Input id="edit-title" placeholder="Titre de l'article" />
-            </div>
-            <div>
-              <label
-                htmlFor="edit-content"
-                className="text-sm font-medium leading-none"
-              >
-                Contenu
-              </label>
-              <Textarea
-                id="edit-content"
-                placeholder="Contenu de l'article"
-                rows={10}
-              />
-            </div>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline">Annuler</Button>
-              <Button>Modifier</Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Dialog de confirmation de suppression */}
-      <DeleteConfirmationDialog
-        isOpen={false}
-        onClose={() => {}}
-        onConfirm={() => {}}
-        title="Supprimer l'article"
-        description={`Êtes-vous sûr de vouloir supprimer l'article ? Cette action est irréversible.`}
-      />
     </div>
   );
 }

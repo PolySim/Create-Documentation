@@ -115,7 +115,7 @@ export const deleteArticle = async (id: string) => {
     const token = await getToken();
     if (!token) {
       console.error("Unauthorized");
-      return [];
+      return { success: false };
     }
 
     const res = await fetch(`${config.API_URL}/articles/${id}`, {
@@ -125,9 +125,9 @@ export const deleteArticle = async (id: string) => {
       },
     });
     revalidateTag("articles");
-    return res.ok;
+    return { success: res.ok };
   } catch (error) {
     console.error(error);
-    throw error;
+    return { success: false };
   }
 };
