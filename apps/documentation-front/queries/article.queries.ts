@@ -34,6 +34,20 @@ export const useUpdateArticle = (id: string) => {
       queryClient.setQueryData(["article", id], data);
       return { previousArticle };
     },
+    onSuccess: (data) => {
+      if (!data.success) {
+        toast.error("Failed to update article");
+        return;
+      }
+      toast.success("Saved");
+    },
+    onError: (error, data, context) => {
+      toast.error("Failed to update article");
+      queryClient.setQueryData(["article", id], context?.previousArticle);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["article", id] });
+    },
   });
 };
 

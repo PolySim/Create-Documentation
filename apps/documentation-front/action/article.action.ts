@@ -90,7 +90,7 @@ export const updateArticle = async (
     const token = await getToken();
     if (!token) {
       console.error("Unauthorized");
-      return [];
+      return { success: false, data: {} as Article };
     }
 
     const res = await fetch(`${config.API_URL}/articles/${id}`, {
@@ -102,10 +102,11 @@ export const updateArticle = async (
       body: JSON.stringify(article),
     });
     revalidateTag(`article-${id}`);
-    return res.json() as Promise<Article>;
+    const data = (await res.json()) as Article;
+    return { success: true, data };
   } catch (error) {
     console.error(error);
-    throw error;
+    return { success: false, data: {} as Article };
   }
 };
 
