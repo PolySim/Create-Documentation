@@ -1,135 +1,208 @@
-# Turborepo starter
+# Documentation Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+Une plateforme moderne de création et de visualisation de documentation, construite avec NestJS et NextJS.
 
-## Using this example
+## 🚀 Fonctionnalités
 
-Run the following command:
+- **Création de documentation** : Éditeur riche basé sur PlateJS pour créer du contenu structuré
+- **Visualisation** : Interface moderne et responsive pour consulter la documentation
+- **Import/Export** : Support de multiples formats (Markdown, HTML)
+- **Intelligence Artificielle** : Intégration d'API IA pour des fonctionnalités avancées
+- **Gestion des utilisateurs** : Système d'authentification et de gestion des comptes
+- **Base de données** : Stockage persistant avec SQLite
 
-```sh
-npx create-turbo@latest
+## 🏗️ Architecture
+
+Ce projet utilise une architecture monorepo avec Turborepo, comprenant :
+
+### Applications
+
+- **`documentation-back`** : API backend construite avec [NestJS](https://nestjs.com/)
+  - Base de données SQLite
+  - Gestion des articles et utilisateurs
+  - Middleware d'authentification
+  - API RESTful
+
+- **`documentation-front`** : Interface utilisateur construite avec [Next.js](https://nextjs.org/)
+  - Éditeur riche basé sur [PlateJS](https://platejs.org/)
+  - Interface moderne et responsive
+  - Gestion des articles et de l'authentification
+  - Intégration IA
+
+### Packages partagés
+
+- **`@repo/ui`** : Composants UI réutilisables
+- **`@repo/eslint-config`** : Configuration ESLint partagée
+- **`@repo/typescript-config`** : Configuration TypeScript partagée
+
+## 🛠️ Technologies utilisées
+
+- **Backend** : NestJS, SQLite, TypeScript
+- **Frontend** : Next.js, React, PlateJS, Tailwind CSS
+- **Monorepo** : Turborepo, pnpm
+- **Base de données** : SQLite avec TypeORM
+- **Authentification** : JWT, Guards NestJS
+
+## 🚀 Démarrage rapide
+
+### Prérequis
+
+- Node.js 18+
+- pnpm
+
+### Installation
+
+```bash
+# Cloner le repository
+git clone https://github.com/PolySim/Create-Documentation.git
+cd documentation
+
+# Installer les dépendances
+pnpm install
+
+# Démarrer le développement
+pnpm dev
 ```
 
-## What's inside?
+### Commandes utiles
 
-This Turborepo includes the following packages/apps:
+```bash
+# Construire tous les projets
+pnpm build
 
-### Apps and Packages
+# Démarrer le développement
+pnpm dev
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+# Lancer les tests
+pnpm test
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+# Construire un projet spécifique
+pnpm build --filter=documentation-back
+pnpm build --filter=documentation-front
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 🔧 Configuration
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+### Variables d'environnement
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Créez un fichier `.env` dans le dossier `documentation-back` :
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```env
+# Base de données
+DATABASE_URL=./database/dev.db
+# Clerk
+CLERK_SECRET_KEY=
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Créez un autre fichier `.env` dans le dossier `documentation-front` :
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+```env
+NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/auth/signIn
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+### Base de données
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+La base de données SQLite est automatiquement créée lors du premier lancement.
 
+## 📚 Utilisation
+
+### Création d'un article
+
+1. Connectez-vous à l'application
+2. Cliquez sur "Créer un article"
+3. Utilisez l'éditeur riche pour rédiger votre contenu
+4. Sauvegardez votre article
+
+### Éditeur PlateJS
+
+L'éditeur offre de nombreuses fonctionnalités :
+
+- Formatage de texte (gras, italique, etc.)
+- Titres et sous-titres
+- Listes et tableaux
+- Images et médias
+- Blocs de code
+- Et bien plus...
+
+### Export/Import
+
+- **Export** : Markdown, HTML
+- **Import** : Markdown, HTML
+
+### Fonctionnalités IA
+
+Avec une clé API configurée, vous pouvez accéder à :
+
+- Suggestions de contenu
+- Correction automatique
+- Génération de résumés
+- Assistance à la rédaction
+
+## 🧪 Tests
+
+```bash
+# Tests unitaires
+pnpm test
+
+# Tests e2e
+pnpm test:e2e
+
+# Couverture de code
+pnpm test:cov
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+## 📦 Déploiement
 
-## Useful Links
+### 🌐 Site en production
 
-Learn more about the power of Turborepo:
+L'application est accessible en production sur : **https://docs.simondesdevises.com**
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+### Backend (Docker + GitHub Actions)
+
+Le backend est déployé automatiquement via GitHub Actions qui :
+
+1. Build l'image Docker de l'application NestJS
+2. Push l'image sur le serveur de production
+3. Déploie le conteneur avec la base de données SQLite
+
+Le processus se déclenche automatiquement à chaque push sur la branche principale.
+
+### Frontend (Vercel)
+
+Le frontend est hébergé sur [Vercel](https://vercel.com/) et se déploie automatiquement :
+
+- Déploiement automatique à chaque push sur la branche principale
+- Prévisualisation automatique pour les Pull Requests
+- Optimisations de performance et CDN global
+
+### Variables d'environnement de production
+
+Assurez-vous de configurer les variables d'environnement nécessaires dans :
+
+- **GitHub Actions** : Pour le build et déploiement du backend
+- **Vercel** : Pour le déploiement du frontend
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Créez une branche pour votre fonctionnalité
+3. Committez vos changements
+4. Poussez vers la branche
+5. Ouvrez une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 🔗 Liens utiles
+
+- [NestJS Documentation](https://docs.nestjs.com/)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [PlateJS Documentation](https://platejs.org/)
+- [Turborepo Documentation](https://turborepo.com/docs)
