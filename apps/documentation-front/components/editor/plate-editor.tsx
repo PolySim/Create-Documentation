@@ -16,7 +16,7 @@ export function PlateEditor({
   articleId: string;
 }) {
   const editor = usePlateEditor({
-    plugins: EditorKit,
+    plugins: EditorKit(false),
     value,
   });
 

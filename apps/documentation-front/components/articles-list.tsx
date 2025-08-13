@@ -5,14 +5,7 @@ import DeleteArticle from "@/app/deleteArticle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Article } from "@repo/ui/models/article.models";
-import {
-  Calendar,
-  Clock,
-  Download,
-  Edit,
-  FileText,
-  Search,
-} from "lucide-react";
+import { Calendar, Clock, Edit, Eye, FileText, Search } from "lucide-react";
 import Link from "next/link";
 
 interface ArticlesListProps {
@@ -117,7 +110,9 @@ export function ArticlesList({ articles }: ArticlesListProps) {
                     </Link>
                   </Button>
                   <Button variant="outline" size="sm">
-                    <Download className="h-4 w-4" />
+                    <Link href={`/${article.id}/view`}>
+                      <Eye className="h-4 w-4" />
+                    </Link>
                   </Button>
                   <DeleteArticle id={article.id} />
                 </div>
