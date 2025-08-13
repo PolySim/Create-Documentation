@@ -15,7 +15,7 @@ jobs:
         run: echo "${{ secrets.REGISTRY_TOKEN }}" | docker login ghcr.io -u "${{ secrets.REGISTRY_USER }}" --password-stdin
 
       - name: Build image
-        run: docker build -t ghcr.io/polysim/documentation-back:latest -f apps/documentation-back/Dockerfile .
+        run: docker build --build-arg CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} -t ghcr.io/polysim/documentation-back:latest -f apps/documentation-back/Dockerfile .
 
       - name: Push image
         run: docker push ghcr.io/polysim/documentation-back:latest
@@ -31,4 +31,8 @@ jobs:
             docker pull ghcr.io/polysim/documentation-back:latest
             docker stop documentation-back || true
             docker rm documentation-back || true
-            docker run -d --name documentation-back -p 5067:5067 -v /usr/src/app/Documentation:/usr/src/app/Documentation ghcr.io/polysim/documentation-back:latest
+            docker run -d --name documentation-back \
+            -p 5067:5067 \
+            -v /usr/src/app/Documentation:/usr/src/app/Documentation \
+            -e CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} \
+            ghcr.io/polysim/documentation-back:latest
