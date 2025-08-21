@@ -4,15 +4,12 @@ import CreateArticle from "@/app/createArticle";
 import DeleteArticle from "@/app/deleteArticle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Article } from "@repo/ui/models/article.models";
+import { useArticles } from "@/queries/article.queries";
 import { Calendar, Clock, Edit, Eye, FileText, Search } from "lucide-react";
 import Link from "next/link";
 
-interface ArticlesListProps {
-  articles: Article[];
-}
-
-export function ArticlesList({ articles }: ArticlesListProps) {
+export function ArticlesList() {
+  const { data: articles } = useArticles();
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("fr-FR", {
       year: "numeric",
@@ -61,7 +58,7 @@ export function ArticlesList({ articles }: ArticlesListProps) {
         </div>
       </div>
 
-      {articles.length === 0 ? (
+      {articles && articles.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <FileText className="h-12 w-12 text-muted-foreground mb-4" />
@@ -75,7 +72,7 @@ export function ArticlesList({ articles }: ArticlesListProps) {
         </Card>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
+          {articles?.map((article) => (
             <Card
               key={article.id}
               className="hover:shadow-lg transition-shadow"

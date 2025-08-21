@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://docs.simondesdevises.com/sitemap.xml
+
+# Crawl-delay pour éviter de surcharger le serveur
+Crawl-delay: 1
+
+# Désactiver l'indexation des pages d'administration et d'édition
+Disallow: /auth/
+Disallow: /editor/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Permettre l'indexation des pages publiques
+Allow: /view/
+Allow: /article/
+Allow: /
+
+# Googlebot spécifique
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bingbot spécifique
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
